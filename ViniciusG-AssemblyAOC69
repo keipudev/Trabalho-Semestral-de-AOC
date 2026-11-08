@@ -1,0 +1,80 @@
+#Trabalho de AOC: Vinícius Guedes dos Santos - ADS NOTURNO 1o sem
+#RA:1110482623041
+
+.data
+
+#mensagens de interação
+mensagem:  .asciiz "Digite um numero binario: "
+erro:      .asciiz "Numero invalido! Tente novamente.\n"
+resultado: .asciiz "Resultado decimal: "
+
+.text
+
+#Leitura da entrada
+inicio:
+    li $v0, 4
+    la $a0, mensagem
+    syscall
+
+    li $v0, 5
+    syscall
+
+    move $t0, $v0
+
+#Intervalo permitido
+    li $t6, 1
+    ble $t0, $t6, invalido
+
+    li $t6, 1000000000
+    bge $t0, $t6, invalido
+
+#Inicializacao dos registradores
+    li $t1, 0
+    li $t2, 1
+    li $t3, 10
+    li $t6, 1
+
+#Separacao e verificacao dos algarismos
+loop:
+    beq $t0, $zero, mostrar
+
+    rem $t4, $t0, $t3
+
+    bgt $t4, $t6, invalido
+
+#Conversao
+    mul $t5, $t4, $t2
+    add $t1, $t1, $t5
+
+#Troca de posicao
+    li $t7, 2
+    mul $t2, $t2, $t7
+
+    div $t0, $t0, $t3
+
+    j loop
+
+#Resultado
+mostrar:
+    li $v0, 4
+    la $a0, resultado
+    syscall
+
+    li $v0, 1
+    move $a0, $t1
+    syscall
+
+    j sair
+
+#mensagem de erro
+invalido:
+    li $v0, 4
+    la $a0, erro
+    syscall
+
+    j inicio
+
+#Encerramento do programa
+sair:
+    li $v0, 10
+    syscall
