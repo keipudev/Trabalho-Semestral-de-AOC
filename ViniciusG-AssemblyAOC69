@@ -1,5 +1,6 @@
 #Trabalho de AOC: Vinícius Guedes dos Santos - ADS NOTURNO 1o sem
 #RA:1110482623041
+#69. Fazer um algoritmo que receba um numero binario (1 < numero < 1000000000 e, caso nao seja, deve ser novamente solicitado) e converta para decimal.
 
 .data
 
